@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  walletAddress String   @unique
+  displayName   String?
+  email         String?  @unique
+  bio           String?
+  avatarUrl     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  contractsAsClient      Contract[]     @relation("ClientContracts")
+  contractsAsContributor Contract[]     @relation("ContributorContracts")
+  notifications          Notification[]
+}
+
+model Contract {
+  id                String         @id @default(cuid())
+  pdaAddress        String?        @unique
+  title             String
+  totalUsdc         Int
+  status            ContractStatus @default(ACTIVE)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  clientWallet      String
+  client            User           @relation("ClientContracts", fields: [clientWallet], references: [walletAddress])
+
+  contributorWallet String
+  contributor       User           @relation("ContributorContracts", fields: [contributorWallet], references: [walletAddress])
+
+  milestones        Milestone[]
+  activityLog       ActivityLog[]
+}
+
+model Milestone {
+  id          String          @id @default(cuid())
+  pdaAddress  String?         @unique
+  index       Int
+  title       String
+  description String?
+  amountUsdc  Int
+  status      MilestoneStatus @default(LOCKED)
+  proofUrl    String?
+  txSignature String?
+  submittedAt DateTime?
+  releasedAt  DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  contractId  String
+  contract    Contract        @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, index])
+}
+
+model Notification {
+  id            String   @id @default(cuid())
+  walletAddress String
+  user          User     @relation(fields: [walletAddress], references: [walletAddress], onDelete: Cascade)
+  type          String
+  message       String
+  read          Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model ActivityLog {
+  id           String   @id @default(cuid())
+  action       String
+  txSignature  String?
+  walletAddress String
+  createdAt    DateTime @default(now())
+
+  contractId   String
+  contract     Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+}
+
+enum ContractStatus {
+  ACTIVE
+  COMPLETED
+}
+
+enum MilestoneStatus {
+  LOCKED
+  SUBMITTED
+  RELEASED
+}

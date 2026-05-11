@@ -1,1 +1,7 @@
 node_modules
+.next
+frontend/.next
+program/target
+program/programs/vestly/target
+dist
+*.log
