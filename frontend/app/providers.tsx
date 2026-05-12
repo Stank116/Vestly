@@ -12,6 +12,7 @@ import {
   WalletProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { useStandardWalletAdapters } from '@solana/wallet-standard-wallet-adapter-react';
 
 const SolanaConnectionProvider = ConnectionProvider as unknown as ComponentType<{
   endpoint: string;
@@ -36,7 +37,7 @@ export default function Providers({ children }: { children: ReactNode }) {
     []
   );
 
-  const wallets = useMemo<Adapter[]>(() => [], []);
+  const wallets = useStandardWalletAdapters([]);
   const handleWalletError = useCallback(
     (error: WalletError, adapter?: Adapter) => {
       if (error instanceof WalletNotReadyError && adapter?.url) {

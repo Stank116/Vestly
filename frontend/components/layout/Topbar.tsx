@@ -9,11 +9,11 @@ interface TopbarProps {
 export default function Topbar({ title, left, right }: TopbarProps) {
   return (
     <div className="topbar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div className="topbar-main">
         {left ?? (title && <div className="page-heading">{title}</div>)}
       </div>
       {right && (
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div className="topbar-actions">
           {right}
         </div>
       )}
