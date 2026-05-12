@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import Icon from './Icon';
+import SolanaWalletButton from './SolanaWalletButton';
 
 export default function WalletGuard({ children }: { children: ReactNode }) {
   const { connected, connecting } = useWallet();
@@ -23,7 +23,7 @@ export default function WalletGuard({ children }: { children: ReactNode }) {
           Vestly uses your Solana wallet as your account. Use a Solana wallet
           on Devnet.
         </div>
-        <WalletMultiButton className="wallet-adapter-button-trigger" />
+        <SolanaWalletButton />
       </div>
     </div>
   );

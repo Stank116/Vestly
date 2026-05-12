@@ -1,8 +1,8 @@
 [programs.localnet]
-vestly = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkgSNpHjG7xkX"
+vestly = "GWGc6ZSvpwQ6VTUE7KHRi2pfddh9Ua16PQYE9yj9aS14"
 
 [programs.devnet]
-vestly = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkgSNpHjG7xkX"
+vestly = "GWGc6ZSvpwQ6VTUE7KHRi2pfddh9Ua16PQYE9yj9aS14"
 
 [provider]
 cluster = "devnet"

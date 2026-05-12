@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import Icon from '@/components/ui/Icon';
 import { useContracts } from '@/hooks/useContracts';
+import SolanaWalletButton from '@/components/ui/SolanaWalletButton';
 
 const CLIENT_NAV = [
   { href: '/dashboard', label: 'Dashboard', icon: 'dashboard', section: 'Overview' },
@@ -79,7 +79,7 @@ export default function Sidebar() {
             <div className="wallet-addr">{shortAddress}</div>
           </div>
         ) : (
-          <WalletMultiButton className="wallet-adapter-button-trigger" />
+          <SolanaWalletButton />
         )}
       </div>
     </aside>

@@ -2,6 +2,7 @@
 
 import { ComponentType, ReactNode, useCallback, useMemo } from 'react';
 import {
+  Adapter,
   WalletError,
   WalletNotReadyError,
 } from '@solana/wallet-adapter-base';
@@ -11,7 +12,6 @@ import {
   WalletProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
-import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom';
 
 const SolanaConnectionProvider = ConnectionProvider as unknown as ComponentType<{
   endpoint: string;
@@ -19,10 +19,10 @@ const SolanaConnectionProvider = ConnectionProvider as unknown as ComponentType<
 }>;
 
 const SolanaWalletProvider = WalletProvider as unknown as ComponentType<{
-  wallets: PhantomWalletAdapter[];
+  wallets: Adapter[];
   autoConnect?: boolean;
   localStorageKey?: string;
-  onError?: (error: WalletError, adapter?: PhantomWalletAdapter) => void;
+  onError?: (error: WalletError, adapter?: Adapter) => void;
   children: ReactNode;
 }>;
 
@@ -36,9 +36,9 @@ export default function Providers({ children }: { children: ReactNode }) {
     []
   );
 
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+  const wallets = useMemo<Adapter[]>(() => [], []);
   const handleWalletError = useCallback(
-    (error: WalletError, adapter?: PhantomWalletAdapter) => {
+    (error: WalletError, adapter?: Adapter) => {
       if (error instanceof WalletNotReadyError && adapter?.url) {
         window.open(adapter.url, '_blank', 'noopener,noreferrer');
       }

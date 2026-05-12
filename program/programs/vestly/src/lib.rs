@@ -7,7 +7,7 @@ pub mod state;
 
 use instructions::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkgSNpHjG7xkX");
+declare_id!("GWGc6ZSvpwQ6VTUE7KHRi2pfddh9Ua16PQYE9yj9aS14");
 
 #[program]
 pub mod vestly {
